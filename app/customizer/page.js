@@ -20,7 +20,7 @@ import MyCanvas from "../canvas";
 
 export default function Page() {
   const snap = useSnapshot(state);
-  console.log("state.intro:", snap.intro);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -28,7 +28,7 @@ export default function Page() {
         className="absolute top-0 left-0 z-10"
         {...slideAnimation("left")}
       >
-        <div className="flex items-center min-h-screen">
+        <div className="flex  items-center min-h-screen">
           <div className="editortabscontainer tabs">
             {EditorTabs.map((tab) => (
               <Tab key={tab} tab={tab} />
@@ -36,11 +36,11 @@ export default function Page() {
           </div>
         </div>
       </motion.div>
-      <div className="flex justify-center items-center min-h-screen relative z-10">
+
+      <div className="absolute flex justify-center items-center min-h-screen w-full h-full z-10">
         <MyCanvas />
       </div>
 
-  {/* This is causnig the error */}
       <motion.div className="absolute z-10 top-4 right-5" {...fadeAnimation}>
         <Link href={"/"}>
           <CustomButton

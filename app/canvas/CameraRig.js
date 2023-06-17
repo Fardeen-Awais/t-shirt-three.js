@@ -14,7 +14,7 @@ const CameraRig = ({ children }) => {
     const isMobile = window.innerWidth <= 600;
 
     // Set initial position
-    let targetPosition = [-0.4, 0, 0.5];
+    let targetPosition = [0, 0, 0.5];
 
     if (snap.intro) {
       if (isBreakpoint) targetPosition = [0, 0, 0.5];
@@ -29,9 +29,6 @@ const CameraRig = ({ children }) => {
 
     // Set the model rotation smoothly
     if (group.current) {
-      console.log("Group:", group.current);
-      console.log("Rotation:", group.current.rotation);
-
       easing.dampE(
         group.current.rotation,
         [state.pointer.y / 10, -state.pointer.x / 5, 0],
