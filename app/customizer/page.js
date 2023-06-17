@@ -21,6 +21,30 @@ import MyCanvas from "../canvas";
 export default function Page() {
   const snap = useSnapshot(state);
 
+  const [file, setFile] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [generatingImg, setGeneratingImg] = useState(false);
+  const [ActiveEditorTab, setActiveEditorTab] = useState("");
+  const [ForFilterTab, setForFilterTab] = useState({
+    logoShirt: true,
+    stylishShirt: false,
+  });
+
+  // show tab content depending on active tab
+  const showTabContent = () => {
+    switch (ActiveEditorTab) {
+      case "colorpicker":
+        return <ColorPicker />;
+      case "filepicker":
+        return <FilePicker />;
+      case "aipicker":
+        return <AiPicker />;
+      default:
+        return "hello";
+    }
+  };
+
+  console.log(`This is the active editor tab: ${ActiveEditorTab}`);
   return (
     <AnimatePresence>
       <motion.div
@@ -28,16 +52,22 @@ export default function Page() {
         className="absolute top-0 left-0 z-10"
         {...slideAnimation("left")}
       >
-        <div className="flex  items-center min-h-screen">
+        <div className="flex items-center min-h-screen">
           <div className="editortabscontainer tabs">
             {EditorTabs.map((tab) => (
-              <Tab key={tab} tab={tab} />
+              <Tab
+              className='cursor-pointer'
+                key={tab.name}
+                tab={tab}
+                handleClick={() => setActiveEditorTab(tab.name)}
+              />
             ))}
+            {showTabContent()}
           </div>
         </div>
       </motion.div>
 
-      <div className="absolute flex justify-center items-center min-h-screen w-full h-full z-10">
+      <div className="absolute flex justify-center items-center min-h-screen w-full h-full ">
         <MyCanvas />
       </div>
 

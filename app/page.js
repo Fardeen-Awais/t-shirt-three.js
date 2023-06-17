@@ -54,7 +54,7 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
-          <div className="flex w-full h-full absolute justify-center max-w-full items-center min-h-screen  z-10">
+          <div className="flex w-full h-full justify-center max-w-full items-center min-h-screen  z-10">
             <MyCanvas />
           </div>
         </div>
