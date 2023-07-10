@@ -25,7 +25,7 @@ export default function Page() {
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
   const [ActiveEditorTab, setActiveEditorTab] = useState("");
-  const [ForFilterTab, setForFilterTab] = useState({
+  const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
   });
@@ -36,15 +36,49 @@ export default function Page() {
       case "colorpicker":
         return <ColorPicker />;
       case "filepicker":
-        return <FilePicker />;
+        return <FilePicker file={file} setFile={setFile} readFile={readFile}/>;
       case "aipicker":
         return <AiPicker />;
       default:
-        return "hello";
+        return null;
     }
   };
 
-  console.log(`This is the active editor tab: ${ActiveEditorTab}`);
+  const handleDecals = (type, result) => {
+    const decalType = DecalTypes[type];
+    state[decalType.stateProperty] = result;
+    if(!activeFilterTab[decalType.filterTab]){
+      handleActiveFilterTab(decalType.FilterTabs)
+    }
+  }
+
+  const handleActiveFilterTab = (tabName) => {
+    switch(tabName){
+      case "logoShirt":
+        state.isLogoTexture = !activeFilterTab[tabName];
+        break;
+      case "stylishShirt":
+        state.isFullTexture = !activeFilterTab[tabName];
+      default:
+        state.isLogoTexture = true;
+        state.isFullTexture = false;
+    }
+  }
+
+  // Read File
+  const readFile = (type) => {
+    reader(file)
+      .then((result) => {
+        handleDecals(type, result);
+        setActiveEditorTab("");
+        console.log('Read file is done')
+      })
+      .catch((error) => {
+        console.error("Error reading file:", error);
+        // Handle the error here
+      });
+  };
+
   return (
     <AnimatePresence>
       <motion.div
